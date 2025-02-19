@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { databases } = require('../appwrite');
+const { databases } = require('../config/appwrite');
 
 exports.selectAllTickets = async () => {
   return await databases.listDocuments(

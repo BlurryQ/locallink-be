@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { databases } = require('../appwrite');
+const { databases } = require('../config/appwrite');
 
 exports.seedEvents = async () => {
   const newEvent = {

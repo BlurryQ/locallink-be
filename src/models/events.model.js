@@ -1,5 +1,6 @@
 require('dotenv').config();
-const { databases } = require('../appwrite');
+const { databases } = require('../config/appwrite');
+const { formatEventData } = require('../utils/formatEventData');
 
 exports.selectAllEvents = async () => {
   return await databases.listDocuments(

@@ -1,12 +1,11 @@
 require('dotenv').config();
-const { databases } = require('../appwrite');
+const { databases } = require('../config/appwrite');
 
 exports.seedTickets = async (res) => {
   const newTicket = {
     event_id: 1,
     owner_id: 1,
     price: 100,
-    purchased: '2025-06-12T15:00',
   };
 
   try {
