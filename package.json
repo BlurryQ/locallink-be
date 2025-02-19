@@ -1,0 +1,26 @@
+{
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "node-appwrite": "^15.0.0"
+  },
+  "name": "locallink-be",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BlurryQ/locallink-be.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/BlurryQ/locallink-be/issues"
+  },
+  "homepage": "https://github.com/BlurryQ/locallink-be#readme"
+}
