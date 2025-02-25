@@ -7,3 +7,11 @@ exports.selectAllTickets = async () => {
     process.env.APPWRITE_TICKETS_TABLE
   );
 };
+
+exports.selectTicketByID = async (ticketID) => {
+  return await databases.getDocument(
+    process.env.APPWRITE_DATABASE_ID,
+    process.env.APPWRITE_TICKETS_TABLE,
+    ticketID
+  );
+};
