@@ -8,7 +8,4 @@ apiRouter.use('/events', eventsRouter);
 
 apiRouter.use('/tickets', ticketsRouter);
 
-// TODO: remove this line
-apiRouter.get('/seed', runSeeds);
-
 module.exports = { apiRouter };
