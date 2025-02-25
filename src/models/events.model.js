@@ -16,3 +16,12 @@ exports.selectEventByID = async (eventID) => {
     eventID
   );
 };
+
+exports.postEvent = async (newEvent) => {
+  return databases.createDocument(
+    process.env.APPWRITE_DATABASE_ID,
+    process.env.APPWRITE_EVENTS_TABLE,
+    'unique()',
+    newEvent
+  );
+};

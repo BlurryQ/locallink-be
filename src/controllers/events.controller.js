@@ -1,5 +1,9 @@
 require('dotenv').config();
-const { selectAllEvents, selectEventByID } = require('../models/events.model');
+const {
+  selectAllEvents,
+  selectEventByID,
+  postEvent,
+} = require('../models/events.model');
 const { formatEventData } = require('../utils/formatEventData');
 
 exports.getAllEvents = async (req, res) => {
@@ -22,6 +26,18 @@ exports.getEventByID = async (req, res) => {
     res.status(200).send(event);
   } catch (err) {
     console.error('Error fetching event:', err);
+    res.status(400).send({ error: err.message });
+  }
+};
+
+exports.createEvent = async (req, res) => {
+  try {
+    const eventData = req.body;
+    const newEventData = await postEvent(eventData);
+    const newEvent = formatEventData(newEventData);
+    res.status(200).send(newEvent);
+  } catch (err) {
+    console.error('Error posting event:', err);
     res.status(400).send({ error: err.message });
   }
 };
