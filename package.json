@@ -9,7 +9,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "seed": "node db/seeds/seedDatabase.js",
+    "reset-db": "node db/seeds/resetDatabase.js",
+    "re-seed": "npm run reset-db && npm run seed"
   },
   "repository": {
     "type": "git",
@@ -22,5 +25,8 @@
   "bugs": {
     "url": "https://github.com/BlurryQ/locallink-be/issues"
   },
-  "homepage": "https://github.com/BlurryQ/locallink-be#readme"
+  "homepage": "https://github.com/BlurryQ/locallink-be#readme",
+  "devDependencies": {
+    "fs": "^0.0.1-security"
+  }
 }
