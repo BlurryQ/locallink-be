@@ -1,0 +1,17 @@
+[
+  {
+    "event_id": 1,
+    "owner_id": 1,
+    "price": 100
+  },
+  {
+    "event_id": 2,
+    "owner_id": 1,
+    "price": 200
+  },
+  {
+    "event_id": 2,
+    "owner_id": 1,
+    "price": 0
+  }
+]
