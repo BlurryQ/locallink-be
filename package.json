@@ -9,7 +9,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --watch",
     "seed": "node db/seeds/seedDatabase.js",
     "reset-db": "node db/seeds/resetDatabase.js",
     "re-seed": "npm run reset-db && npm run seed"
@@ -27,6 +27,14 @@
   },
   "homepage": "https://github.com/BlurryQ/locallink-be#readme",
   "devDependencies": {
-    "fs": "^0.0.1-security"
+    "fs": "^0.0.1-security",
+    "jest": "^29.7.0",
+    "jest-sorted": "^1.0.15",
+    "supertest": "^7.0.0"
+  },
+  "jest": {
+    "setupFilesAfterEnv": [
+      "jest-sorted"
+    ]
   }
 }
