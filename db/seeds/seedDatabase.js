@@ -2,6 +2,10 @@ require('dotenv').config();
 const { databases } = require('../../src/config/appwrite');
 const fs = require('fs');
 
+// change to true to see all logs
+const debugging = false;
+
+// main function
 const seedCollection = async (collectionID, dataPath) => {
   const data = JSON.parse(fs.readFileSync(dataPath, 'utf-8'));
   for (const item of data) {
@@ -20,17 +24,17 @@ const seedDatabase = async () => {
       process.env.APPWRITE_EVENTS_TABLE,
       './db/data/events.json'
     );
-    console.log('✅ Events seeded!');
+    if (debugging) console.log('✅ Events seeded!');
     await seedCollection(
       process.env.APPWRITE_TICKETS_TABLE,
       './db/data/tickets.json'
     );
-    console.log('✅ Tickets seeded!');
+    if (debugging) console.log('✅ Tickets seeded!');
 
-    console.log('✅ Database seeded! ✅');
+    if (debugging) console.log('✅ Database seeded! ✅');
   } catch (err) {
-    console.error('Error seeding database:', err);
+    if (debugging) console.error('Error seeding database:', err);
   }
 };
 
-seedDatabase();
+module.exports = { seedDatabase };
