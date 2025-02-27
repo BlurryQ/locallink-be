@@ -12,7 +12,7 @@ exports.getAllTickets = async (req, res) => {
     const formattedTickets = { tickets, total: data.total };
     res.status(200).send(formattedTickets);
   } catch (err) {
-    console.error('Error fetching tickets:', err);
+    // console.error('Error fetching tickets:', err);
     res.status(400).send({ error: err.message });
   }
 };
@@ -24,7 +24,7 @@ exports.getTicketByID = async (req, res) => {
     console.log(data);
     res.status(200).send(data);
   } catch (err) {
-    console.error('Error fetching ticket:', err);
+    // console.error('Error fetching ticket:', err);
     res.status(400).send({ error: err.message });
   }
 };
