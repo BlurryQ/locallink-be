@@ -9,6 +9,7 @@ const debugging = false;
 const seedCollection = async (collectionID, dataPath) => {
   const data = JSON.parse(fs.readFileSync(dataPath, 'utf-8'));
   for (const item of data) {
+    item.location = JSON.stringify(item.location);
     await databases.createDocument(
       process.env.APPWRITE_DATABASE_ID,
       collectionID,
