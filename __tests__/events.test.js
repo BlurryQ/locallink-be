@@ -4,6 +4,7 @@ require('jest-sorted');
 
 const { seedDatabase } = require('../db/seeds/seedDatabase');
 const { resetDatabase } = require('../db/seeds/resetDatabase');
+const { formatEventData } = require('../src/utils/formatEventData');
 
 beforeAll(async () => {
   await resetDatabase();
@@ -86,10 +87,56 @@ describe('/events endpoint testing for LocalLink', () => {
     });
     it('200: returns the events array filtered by location', () => {
       return request(app)
-        .get('/events?location=M2 3BF')
+        .get('/events?lat=	53.480204&long=-2.242407&radius=5')
         .expect(200)
         .then(({ body }) => {
-          expect(true).toBe(false);
+          const returnArr = [
+            {
+              name: 'test 2',
+              start: '2025-06-12T19:00:00.000+00:00',
+              end: '2025-06-12T21:30:00.000+00:00',
+              location: {
+                name: 'The Pub',
+                street: '123 Main St',
+                city: 'Manchester',
+                postcode: 'M2 3AW',
+                country: 'UK',
+                coords: { lat: 53.48169, long: -2.24089 },
+              },
+              organiser: 1,
+              capacity: 50,
+              details: 'Another test event',
+              status: 'Upcoming',
+              price: 100,
+              category: 'test',
+            },
+            {
+              name: 'test',
+              start: '2025-06-18T19:00:00.000+00:00',
+              end: '2025-06-18T21:30:00.000+00:00',
+              location: {
+                name: 'The Pub',
+                street: '123 Main St',
+                city: 'Manchester',
+                postcode: 'M2 3AW',
+                country: 'UK',
+                coords: { lat: 53.48169, long: -2.24089 },
+              },
+              organiser: 1,
+              capacity: 50,
+              details: 'A test event',
+              status: 'Upcoming',
+              price: 100,
+              category: 'testing',
+            },
+          ];
+          const eventsWithIDsRemoved = body.events.map(
+            ({ id, ...rest }) => rest
+          );
+          expect(eventsWithIDsRemoved).toEqual(
+            expect.arrayContaining(returnArr)
+          );
+          expect(eventsWithIDsRemoved.length).toBe(2);
         });
     });
     it('200: returns the events array filtered by multiple filters', () => {
@@ -109,11 +156,17 @@ describe('/events endpoint testing for LocalLink', () => {
   describe('POST /events - returns successfully posted object with an id', () => {
     it('201: successfully posts an event to endpoint and recieves article object back', () => {
       const newEvent = {
-        name: 'test 3',
+        name: 'test 4',
         start: '2025-06-14T19:00:00.000+00:00',
         end: '2025-06-14T21:30:00.000+00:00',
-        location:
-          "{'name': 'The Pub', 'street':'123 Main St','city':'Manchester','postcode':'M2 3AW','country':'UK'}",
+        location: {
+          name: 'The Pub',
+          street: '123 Main St',
+          city: 'Manchester',
+          postcode: 'M2 3AW',
+          country: 'UK',
+          coords: { lat: 53.48169, long: -2.24089 },
+        },
         organiser: 2,
         capacity: 100,
         details: 'Tester',
@@ -121,6 +174,7 @@ describe('/events endpoint testing for LocalLink', () => {
         price: 1000,
         category: 'test',
       };
+      newEvent.location = JSON.stringify(newEvent.location);
       return request(app)
         .post('/events')
         .send(newEvent)
@@ -139,8 +193,14 @@ describe('/events endpoint testing for LocalLink', () => {
       const noNameEvent = {
         start: '2025-06-14T19:00:00.000+00:00',
         end: '2025-06-14T21:30:00.000+00:00',
-        location:
-          "{'name': 'The Pub', 'street':'123 Main St','city':'Manchester','postcode':'M2 3AW','country':'UK'}",
+        location: {
+          name: 'The Pub',
+          street: '123 Main St',
+          city: 'Liverpool',
+          postcode: 'CH41 5LH',
+          country: 'UK',
+          coords: { lat: 53.39047, long: -3.00847 },
+        },
         organiser: 2,
         capacity: 100,
         details: 'Tester',
@@ -148,18 +208,27 @@ describe('/events endpoint testing for LocalLink', () => {
         price: 1000,
         category: 'test',
       };
+      noNameEvent.location = JSON.stringify(noNameEvent.location);
       const noCapacityEvent = {
         name: 'New Event',
         start: '2025-06-14T19:00:00.000+00:00',
         end: '2025-06-14T21:30:00.000+00:00',
-        location:
-          "{'name': 'The Pub', 'street':'123 Main St','city':'Manchester','postcode':'M2 3AW','country':'UK'}",
+        location: {
+          name: 'The Pub',
+          street: '123 Main St',
+          city: 'Liverpool',
+          postcode: 'CH41 5LH',
+          country: 'UK',
+          coords: { lat: 53.39047, long: -3.00847 },
+        },
         organiser: 2,
         details: 'Tester',
         status: 'Upcoming',
         price: 1000,
         category: 'test',
       };
+      noCapacityEvent.location = JSON.stringify(noCapacityEvent.location);
+      // TODO add second post test
       return request(app)
         .post('/events')
         .send(noCapacityEvent)
@@ -182,8 +251,14 @@ describe('/events/:id endpoint testing for LocalLink', () => {
         name: 'test 2',
         start: '2025-06-12T19:00:00.000+00:00',
         end: '2025-06-12T21:30:00.000+00:00',
-        location:
-          "{'name': 'The Pub', 'street':'123 Main St','city':'Manchester','postcode':'M2 3AW','country':'UK'}",
+        location: {
+          name: 'The Pub',
+          street: '123 Main St',
+          city: 'Manchester',
+          postcode: 'M2 3AW',
+          country: 'UK',
+          coords: { lat: 53.48169, long: -2.24089 },
+        },
         organiser: 1,
         capacity: 50,
         details: 'Another test event',
@@ -200,8 +275,11 @@ describe('/events/:id endpoint testing for LocalLink', () => {
             .get('/events/' + events[0].id)
             .expect(200)
             .then(({ body }) => {
-              expect(body).toEqual(expect.objectContaining(event));
-              expect(body).toHaveProperty('id');
+              const formattedEvent = formatEventData(body);
+              expect(formattedEvent).toEqual(
+                expect.objectContaining(formattedEvent)
+              );
+              expect(formattedEvent).toHaveProperty('id');
             });
         });
     });
