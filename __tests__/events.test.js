@@ -32,6 +32,7 @@ describe('/events endpoint testing for LocalLink', () => {
           const event = body.events[0];
           expect(event).toHaveProperty('id');
           expect(event).toHaveProperty('name');
+          expect(event).toHaveProperty('createdAt');
           expect(event).toHaveProperty('start');
           expect(event).toHaveProperty('end');
           expect(event).toHaveProperty('location');
@@ -87,7 +88,7 @@ describe('/events endpoint testing for LocalLink', () => {
     });
     it('200: returns the events array filtered by location', () => {
       return request(app)
-        .get('/events?lat=	53.480204&long=-2.242407&radius=5')
+        .get('/events?lat=53.480204&long=-2.242407&radius=5')
         .expect(200)
         .then(({ body }) => {
           const returnArr = [
@@ -130,13 +131,21 @@ describe('/events endpoint testing for LocalLink', () => {
               category: 'testing',
             },
           ];
-          const eventsWithIDsRemoved = body.events.map(
-            ({ id, ...rest }) => rest
+          const eventsWithoutIDsAndCreationDate = body.events.map(
+            ({ id, createdAt, ...rest }) => rest
           );
-          expect(eventsWithIDsRemoved).toEqual(
-            expect.arrayContaining(returnArr)
-          );
-          expect(eventsWithIDsRemoved.length).toBe(2);
+          expect(eventsWithoutIDsAndCreationDate).toEqual(returnArr);
+          expect(eventsWithoutIDsAndCreationDate.length).toBe(2);
+          expect(body.total).toBe(2);
+        });
+    });
+    it('200: returns the events array ordered by recently added', () => {
+      return request(app)
+        .get('/events?recent=true')
+        .expect(200)
+        .then(({ body }) => {
+          const events = body.events;
+          expect(events).toBeSortedBy('createdAt', { descending: true });
         });
     });
     it('200: returns the events array filtered by multiple filters', () => {
@@ -154,7 +163,7 @@ describe('/events endpoint testing for LocalLink', () => {
   });
 
   describe('POST /events - returns successfully posted object with an id', () => {
-    it('201: successfully posts an event to endpoint and recieves article object back', () => {
+    it('201: successfully posts an event to endpoint and recieves event object back', () => {
       const newEvent = {
         name: 'test 4',
         start: '2025-06-14T19:00:00.000+00:00',
@@ -174,7 +183,6 @@ describe('/events endpoint testing for LocalLink', () => {
         price: 1000,
         category: 'test',
       };
-      newEvent.location = JSON.stringify(newEvent.location);
       return request(app)
         .post('/events')
         .send(newEvent)
@@ -184,8 +192,10 @@ describe('/events endpoint testing for LocalLink', () => {
             .get('/events/' + body.id)
             .expect(200)
             .then(({ body }) => {
-              expect(body).toEqual(expect.objectContaining(newEvent));
+              const { id, createdAt, ...eventWithoutIDAndCreationDate } = body;
+              expect(eventWithoutIDAndCreationDate).toEqual(newEvent);
               expect(body).toHaveProperty('id');
+              expect(body).toHaveProperty('createdAt');
             });
         });
     });
@@ -228,7 +238,6 @@ describe('/events endpoint testing for LocalLink', () => {
         category: 'test',
       };
       noCapacityEvent.location = JSON.stringify(noCapacityEvent.location);
-      // TODO add second post test
       return request(app)
         .post('/events')
         .send(noCapacityEvent)
@@ -239,8 +248,86 @@ describe('/events endpoint testing for LocalLink', () => {
               'Invalid document structure: Missing required attribute "capacity"',
           };
           expect(body).toEqual(errorMessage);
+          return request(app)
+            .post('/events')
+            .send(noCapacityEvent)
+            .expect(400)
+            .then(({ body }) => {
+              const errorMessage = {
+                error:
+                  'Invalid document structure: Missing required attribute "capacity"',
+              };
+              expect(body).toEqual(errorMessage);
+            });
         });
     });
+  });
+});
+
+describe('PATCH /events - returns successfully patched object', () => {
+  it('200: successfully patches an event to endpoint and recieves amended event object back', () => {
+    return request(app)
+      .get('/events')
+      .expect(200)
+      .then(({ body }) => {
+        const id = body.events[2].id;
+        return request(app)
+          .patch('/events/' + id)
+          .send({ name: 'Test 4: CAPS' })
+          .expect(200)
+          .then(({ body }) => {
+            expect(body.name).toBe('Test 4: CAPS');
+            return request(app)
+              .get('/events/')
+              .expect(200)
+              .then(({ body }) => {
+                const events = body.events;
+                expect(events[2].name).toBe('Test 4: CAPS');
+              });
+          });
+      });
+  });
+  it('400: errors if properties sent that do not exist', () => {
+    return request(app)
+      .get('/events')
+      .expect(200)
+      .then(({ body }) => {
+        const id = body.events[2].id;
+        return request(app)
+          .patch('/events/' + id)
+          .send({ bob: 'Bob' })
+          .expect(400)
+          .then(({ body }) => {
+            expect(body.error).toBe(
+              'Invalid document structure: Unknown attribute: "bob"'
+            );
+          });
+      });
+  });
+});
+
+describe('DELETE /events - returns successfully patched object', () => {
+  it('204: successfully deletes an event by ID', () => {
+    return request(app)
+      .get('/events')
+      .expect(200)
+      .then(({ body }) => {
+        const id = body.events[2].id;
+        return request(app)
+          .delete('/events/' + id)
+          .expect(204)
+          .then((body) => {
+            expect(body.body).toEqual({});
+            return request(app)
+              .get('/events' + id)
+              .expect(404);
+          });
+      });
+  });
+  it('400: errors if id does not exist', () => {
+    return request(app)
+      .delete('/events/' + '67c5a1f06f21c497d5da')
+      .expect(400);
   });
 });
 
@@ -257,7 +344,10 @@ describe('/events/:id endpoint testing for LocalLink', () => {
           city: 'Manchester',
           postcode: 'M2 3AW',
           country: 'UK',
-          coords: { lat: 53.48169, long: -2.24089 },
+          coords: {
+            lat: 53.48169,
+            long: -2.24089,
+          },
         },
         organiser: 1,
         capacity: 50,
@@ -275,11 +365,9 @@ describe('/events/:id endpoint testing for LocalLink', () => {
             .get('/events/' + events[0].id)
             .expect(200)
             .then(({ body }) => {
-              const formattedEvent = formatEventData(body);
-              expect(formattedEvent).toEqual(
-                expect.objectContaining(formattedEvent)
-              );
-              expect(formattedEvent).toHaveProperty('id');
+              expect(body).toEqual(expect.objectContaining(event));
+              expect(body).toHaveProperty('id');
+              expect(body).toHaveProperty('createdAt');
             });
         });
     });
