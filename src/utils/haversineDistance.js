@@ -1,19 +1,21 @@
-exports.haversineDistance = (coords1, coords2) => {
+exports.haversineDistance = (location, destination) => {
   const getRadiansFromDegrees = (degrees) => {
     return (degrees * Math.PI) / 180;
   };
 
   const EARTH_RADIUS_IN_METERS = 6371e3;
 
-  const sourceLatitudeInRadians = getRadiansFromDegrees(coords1.lat);
-  const destinationLatitudeInRadians = getRadiansFromDegrees(coords2.lat);
-  const latitudeDifference = getRadiansFromDegrees(coords2.lat - coords1.lat);
+  const locationLatitudeInRadians = getRadiansFromDegrees(location.lat);
+  const destinationLatitudeInRadians = getRadiansFromDegrees(destination.lat);
+  const latitudeDifference = getRadiansFromDegrees(
+    destination.lat - location.lat
+  );
   const longitudeDifference = getRadiansFromDegrees(
-    coords2.long - coords1.long
+    destination.long - location.long
   );
   const haversineOfCentralAngle =
     Math.pow(Math.sin(latitudeDifference / 2), 2) +
-    Math.cos(sourceLatitudeInRadians) *
+    Math.cos(locationLatitudeInRadians) *
       Math.cos(destinationLatitudeInRadians) *
       Math.pow(Math.sin(longitudeDifference / 2), 2);
   const centralAngle =
