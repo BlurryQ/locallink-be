@@ -1,5 +1,5 @@
 const request = require('supertest');
-const { app, server } = require('../src');
+const { app } = require('../src');
 require('jest-sorted');
 
 describe('/events endpoint testing for LocalLink', () => {
