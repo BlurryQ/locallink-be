@@ -14,7 +14,7 @@
     "organiser": 1,
     "capacity": 50,
     "details": "A test event",
-    "status": "Upcoming",
+    "status": "upcoming",
     "price": 100,
     "category": "testing"
   },
@@ -33,7 +33,7 @@
     "organiser": 1,
     "capacity": 50,
     "details": "Another test event",
-    "status": "Upcoming",
+    "status": "upcoming",
     "price": 100,
     "category": "test"
   },
@@ -52,7 +52,7 @@
     "organiser": 2,
     "capacity": 150,
     "details": "Test event",
-    "status": "Upcoming",
+    "status": "upcoming",
     "price": 0,
     "category": "testing"
   }
