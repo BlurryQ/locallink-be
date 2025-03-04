@@ -49,7 +49,7 @@
       "country": "UK",
       "coords": { "lat": 53.39047, "long": -3.00847 }
     },
-    "organiser": 1,
+    "organiser": 2,
     "capacity": 150,
     "details": "Test event",
     "status": "Upcoming",
