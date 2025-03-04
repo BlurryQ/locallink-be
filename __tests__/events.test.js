@@ -137,6 +137,17 @@ describe('/events endpoint testing for LocalLink', () => {
           expect(events).toBeSortedBy('createdAt', { descending: true });
         });
     });
+    it('200: returns the events array filtered by organiser', () => {
+      return request(app)
+        .get('/events?organiser=' + 2)
+        .expect(200)
+        .then(({ body }) => {
+          const events = body.events;
+          events.forEach((event) => {
+            expect(event.organiser).toBe(2);
+          });
+        });
+    });
     it('200: returns the events array filtered by multiple filters', () => {
       return request(app)
         .get('/events?category=testing&isFree=true')

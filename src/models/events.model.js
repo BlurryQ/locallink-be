@@ -5,13 +5,19 @@ require('dotenv').config({
 const { Query } = require('node-appwrite');
 const { databases } = require('../config/appwrite');
 
-exports.selectAllEvents = async (category, isFree = false, recent = false) => {
+exports.selectAllEvents = async (
+  category,
+  isFree = false,
+  recent = false,
+  organiser = false
+) => {
   // return queries in ascending order by default
   const order = recent
     ? Query.orderDesc('$createdAt')
     : Query.orderAsc('start');
   const queries = [order];
   if (category) queries.push(Query.equal('category', category));
+  if (organiser) queries.push(Query.equal('organiser', Number(organiser)));
   if (isFree) queries.push(Query.equal('price', 0));
   return await databases.listDocuments(
     process.env.APPWRITE_DATABASE_ID,
