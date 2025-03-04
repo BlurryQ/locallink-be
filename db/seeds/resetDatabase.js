@@ -1,4 +1,8 @@
-require('dotenv').config();
+const ENV = process.env.NODE_ENV || 'development';
+require('dotenv').config({
+  path: `${__dirname}/../../.env.${ENV}`,
+});
+
 const { databases } = require('../../src/config/appwrite');
 const { Permission, Role } = require('node-appwrite');
 const { eventsAttributes } = require('../attributes/events.attribute');
@@ -64,5 +68,7 @@ const seedAttributes = async () => {
     if (debugging) console.error('Error seeding attributes:', err);
   }
 };
+
+// resetDatabase();
 
 module.exports = { resetDatabase };
