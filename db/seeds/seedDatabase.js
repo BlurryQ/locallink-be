@@ -1,4 +1,8 @@
-require('dotenv').config();
+const ENV = process.env.NODE_ENV || 'development';
+require('dotenv').config({
+  path: `${__dirname}/../../.env.${ENV}`,
+});
+
 const { databases } = require('../../src/config/appwrite');
 const fs = require('fs');
 
@@ -9,7 +13,7 @@ const debugging = false;
 const seedCollection = async (collectionID, dataPath) => {
   const data = JSON.parse(fs.readFileSync(dataPath, 'utf-8'));
   for (const item of data) {
-    item.location = JSON.stringify(item.location);
+    if (item.location) item.location = JSON.stringify(item.location);
     await databases.createDocument(
       process.env.APPWRITE_DATABASE_ID,
       collectionID,
@@ -37,5 +41,7 @@ const seedDatabase = async () => {
     if (debugging) console.error('Error seeding database:', err);
   }
 };
+
+// seedDatabase();
 
 module.exports = { seedDatabase };

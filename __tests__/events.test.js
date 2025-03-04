@@ -2,17 +2,6 @@ const request = require('supertest');
 const { app, server } = require('../src');
 require('jest-sorted');
 
-const { seedDatabase } = require('../db/seeds/seedDatabase');
-const { resetDatabase } = require('../db/seeds/resetDatabase');
-const { formatEventData } = require('../src/utils/formatEventData');
-
-beforeAll(async () => {
-  await resetDatabase();
-  await seedDatabase();
-  console.log('✅ Database reset and seeded!');
-});
-afterAll(() => server.close());
-
 describe('/events endpoint testing for LocalLink', () => {
   describe('GET /events - returns an array of objects containing event information', () => {
     it('200: returns an array', () => {
@@ -48,8 +37,8 @@ describe('/events endpoint testing for LocalLink', () => {
         .get('/events')
         .expect(200)
         .then(({ body }) => {
-          const totalEvents = body.events.length;
-          expect(totalEvents).toBe(3);
+          expect(body.events.length).toBe(3);
+          expect(body.total).toBe(3);
         });
     });
     it('200: returns the events array in the order the events start', () => {
@@ -264,73 +253,6 @@ describe('/events endpoint testing for LocalLink', () => {
   });
 });
 
-describe('PATCH /events - returns successfully patched object', () => {
-  it('200: successfully patches an event to endpoint and recieves amended event object back', () => {
-    return request(app)
-      .get('/events')
-      .expect(200)
-      .then(({ body }) => {
-        const id = body.events[2].id;
-        return request(app)
-          .patch('/events/' + id)
-          .send({ name: 'Test 4: CAPS' })
-          .expect(200)
-          .then(({ body }) => {
-            expect(body.name).toBe('Test 4: CAPS');
-            return request(app)
-              .get('/events/')
-              .expect(200)
-              .then(({ body }) => {
-                const events = body.events;
-                expect(events[2].name).toBe('Test 4: CAPS');
-              });
-          });
-      });
-  });
-  it('400: errors if properties sent that do not exist', () => {
-    return request(app)
-      .get('/events')
-      .expect(200)
-      .then(({ body }) => {
-        const id = body.events[2].id;
-        return request(app)
-          .patch('/events/' + id)
-          .send({ bob: 'Bob' })
-          .expect(400)
-          .then(({ body }) => {
-            expect(body.error).toBe(
-              'Invalid document structure: Unknown attribute: "bob"'
-            );
-          });
-      });
-  });
-});
-
-describe('DELETE /events - returns successfully patched object', () => {
-  it('204: successfully deletes an event by ID', () => {
-    return request(app)
-      .get('/events')
-      .expect(200)
-      .then(({ body }) => {
-        const id = body.events[2].id;
-        return request(app)
-          .delete('/events/' + id)
-          .expect(204)
-          .then((body) => {
-            expect(body.body).toEqual({});
-            return request(app)
-              .get('/events' + id)
-              .expect(404);
-          });
-      });
-  });
-  it('400: errors if id does not exist', () => {
-    return request(app)
-      .delete('/events/' + '67c5a1f06f21c497d5da')
-      .expect(400);
-  });
-});
-
 describe('/events/:id endpoint testing for LocalLink', () => {
   describe('GET /events/:id - returns an event object containing relevant information', () => {
     it('200: returns correct event object', () => {
@@ -375,11 +297,11 @@ describe('/events/:id endpoint testing for LocalLink', () => {
       return request(app)
         .get('/events/bob')
         .expect(404)
-        .then((body) => {
+        .then(({ body }) => {
           const errorMessage = {
             error: 'Document with the requested ID could not be found.',
           };
-          expect(body.body).toEqual(errorMessage);
+          expect(body).toEqual(errorMessage);
           return request(app)
             .get('/events/12345')
             .expect(404)
@@ -390,6 +312,72 @@ describe('/events/:id endpoint testing for LocalLink', () => {
               expect(body.body).toEqual(errorMessage);
             });
         });
+    });
+  });
+  describe('PATCH /events/:id - returns successfully patched object', () => {
+    it('200: successfully patches an event to endpoint and recieves amended event object back', () => {
+      return request(app)
+        .get('/events')
+        .expect(200)
+        .then(({ body }) => {
+          const id = body.events[2].id;
+          return request(app)
+            .patch('/events/' + id)
+            .send({ name: 'Test 4: CAPS' })
+            .expect(200)
+            .then(({ body }) => {
+              expect(body.name).toBe('Test 4: CAPS');
+              return request(app)
+                .get('/events/')
+                .expect(200)
+                .then(({ body }) => {
+                  const events = body.events;
+                  expect(events[2].name).toBe('Test 4: CAPS');
+                });
+            });
+        });
+    });
+    it('400: errors if properties sent that do not exist', () => {
+      return request(app)
+        .get('/events')
+        .expect(200)
+        .then(({ body }) => {
+          const id = body.events[2].id;
+          return request(app)
+            .patch('/events/' + id)
+            .send({ bob: 'Bob' })
+            .expect(400)
+            .then(({ body }) => {
+              expect(body.error).toBe(
+                'Invalid document structure: Unknown attribute: "bob"'
+              );
+            });
+        });
+    });
+  });
+
+  describe('DELETE /events/:id - successfully deletes the chosen event', () => {
+    it('204: successfully deletes an event by ID', () => {
+      return request(app)
+        .get('/events')
+        .expect(200)
+        .then(({ body }) => {
+          const id = body.events[2].id;
+          return request(app)
+            .delete('/events/' + id)
+            .expect(204)
+            .then((body) => {
+              expect(body.body).toEqual({});
+              return request(app)
+                .get('/events' + id)
+                .expect(404);
+            });
+        });
+    });
+    it('400: errors if ID does not exist', () => {
+      return request(app)
+        .delete('/events/' + '67c5a1f06f21c497d5da')
+        .expect(400);
     });
   });
 });

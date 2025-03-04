@@ -9,9 +9,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --watch",
-    "seed": "node db/seeds/seedDatabase.js",
+    "test": "jest --runInBand --watch --verbose",
     "reset-db": "node db/seeds/resetDatabase.js",
+    "seed": "node db/seeds/seedDatabase.js",
     "re-seed": "npm run reset-db && npm run seed"
   },
   "repository": {
@@ -34,6 +34,7 @@
   },
   "jest": {
     "setupFilesAfterEnv": [
+      "<rootDir>/src/config/setupTests.js",
       "jest-sorted"
     ]
   }

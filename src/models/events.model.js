@@ -1,4 +1,7 @@
-require('dotenv').config();
+const ENV = process.env.NODE_ENV || 'development';
+require('dotenv').config({
+  path: `${__dirname}/../../.env.${ENV}`,
+});
 const { Query } = require('node-appwrite');
 const { databases } = require('../config/appwrite');
 
