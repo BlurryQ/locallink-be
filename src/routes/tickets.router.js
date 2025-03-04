@@ -1,3 +1,4 @@
+const { getTicketEvents } = require('../controllers/ticketEvents.controller');
 const {
   getAllTickets,
   getTicketByID,
@@ -16,5 +17,9 @@ ticketsRouter.get('/:ticketID', getTicketByID);
 ticketsRouter.patch('/:ticketID', editTicket);
 
 ticketsRouter.delete('/:ticketID', removeTicket);
+
+ticketsRouter.get('/events/:userID', getTicketEvents);
+
+ticketsRouter.get('/events/:userID', getTicketEvents);
 
 module.exports = { ticketsRouter };
