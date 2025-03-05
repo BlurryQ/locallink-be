@@ -15,5 +15,11 @@ exports.eventsAttributes = async (databases, db, eventsTable) => {
   await databases.createStringAttribute(db, eventsTable, 'status', 32, true);
   await databases.createIntegerAttribute(db, eventsTable, 'price', true);
   await databases.createStringAttribute(db, eventsTable, 'category', 32, true);
-  await databases.createStringAttribute(db, eventsTable, 'img_url', 128, false);
+  await databases.createStringAttribute(
+    db,
+    eventsTable,
+    'image_url',
+    128,
+    false
+  );
 };
