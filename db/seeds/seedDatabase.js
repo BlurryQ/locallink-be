@@ -12,14 +12,24 @@ const debugging = false;
 // main function
 const seedCollection = async (collectionID, dataPath) => {
   const data = JSON.parse(fs.readFileSync(dataPath, 'utf-8'));
+  // count is used to assign ids programmatically (eg 1, 2 and 2)
+  let count = 0;
   for (const item of data) {
     if (item.location) item.location = JSON.stringify(item.location);
+    else {
+      const events = await databases.listDocuments(
+        process.env.APPWRITE_DATABASE_ID,
+        process.env.APPWRITE_EVENTS_TABLE
+      );
+      item.event_id = events.documents[count].$id;
+    }
     await databases.createDocument(
       process.env.APPWRITE_DATABASE_ID,
       collectionID,
       'unique()',
       item
     );
+    count = 1;
   }
 };
 
