@@ -9,9 +9,11 @@ const { formatEventData } = require('../utils/formatEventData');
 const { getEventsWithinRadius } = require('../utils/getEventsWithinRadius');
 
 exports.getAllEvents = async (req, res) => {
-  const { category, lat, long, radius, isFree, recent, organiser } = req.query;
+  const { category, lat, long, radius, isFree, recent, organiser, status } =
+    req.query;
+  const queries = { status, category, organiser, isFree };
   try {
-    const data = await selectAllEvents(category, isFree, recent, organiser);
+    const data = await selectAllEvents(recent, queries);
     let events = data.documents.map(formatEventData);
     // if location query and all data present
     if (lat && long && radius) {
