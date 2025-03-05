@@ -32,13 +32,15 @@ describe('/events endpoint testing for LocalLink', () => {
           expect(event).toHaveProperty('category');
         });
     });
-    it('200: returns the total of event objects correctly (3)', () => {
+    it('200: returns the events array without the past events', () => {
       return request(app)
         .get('/events')
         .expect(200)
         .then(({ body }) => {
-          expect(body.events.length).toBe(3);
-          expect(body.total).toBe(3);
+          const events = body.events;
+          events.forEach((event) => {
+            expect(event.status).toBe('upcoming');
+          });
         });
     });
     it('200: returns the events array in the order the events start', () => {
@@ -51,6 +53,35 @@ describe('/events endpoint testing for LocalLink', () => {
             event.start = new Date(event.start);
           });
           expect(events).toBeSortedBy('start', { descending: false });
+        });
+    });
+    it('200: returns the events array ordered by recently added', () => {
+      return request(app)
+        .get('/events?recent=true')
+        .expect(200)
+        .then(({ body }) => {
+          const events = body.events;
+          expect(events).toBeSortedBy('createdAt', { descending: true });
+        });
+    });
+    it('200: returns the total of event objects correctly (3)', () => {
+      return request(app)
+        .get('/events')
+        .expect(200)
+        .then(({ body }) => {
+          expect(body.events.length).toBe(3);
+          expect(body.total).toBe(3);
+        });
+    });
+    it('200: returns the events array filtered by past events', () => {
+      return request(app)
+        .get('/events?status=past')
+        .expect(200)
+        .then(({ body }) => {
+          const events = body.events;
+          events.forEach((event) => {
+            expect(event.status).toBe('past');
+          });
         });
     });
     it('200: returns the events array filtered by category', () => {
@@ -96,7 +127,7 @@ describe('/events endpoint testing for LocalLink', () => {
               organiser: 1,
               capacity: 50,
               details: 'Another test event',
-              status: 'Upcoming',
+              status: 'upcoming',
               price: 100,
               category: 'test',
             },
@@ -115,7 +146,7 @@ describe('/events endpoint testing for LocalLink', () => {
               organiser: 1,
               capacity: 50,
               details: 'A test event',
-              status: 'Upcoming',
+              status: 'upcoming',
               price: 100,
               category: 'testing',
             },
@@ -126,15 +157,6 @@ describe('/events endpoint testing for LocalLink', () => {
           expect(eventsWithoutIDsAndCreationDate).toEqual(returnArr);
           expect(eventsWithoutIDsAndCreationDate.length).toBe(2);
           expect(body.total).toBe(2);
-        });
-    });
-    it('200: returns the events array ordered by recently added', () => {
-      return request(app)
-        .get('/events?recent=true')
-        .expect(200)
-        .then(({ body }) => {
-          const events = body.events;
-          expect(events).toBeSortedBy('createdAt', { descending: true });
         });
     });
     it('200: returns the events array filtered by organiser', () => {
@@ -179,7 +201,7 @@ describe('/events endpoint testing for LocalLink', () => {
         organiser: 2,
         capacity: 100,
         details: 'Tester',
-        status: 'Upcoming',
+        status: 'upcoming',
         price: 1000,
         category: 'test',
       };
@@ -214,7 +236,7 @@ describe('/events endpoint testing for LocalLink', () => {
         organiser: 2,
         capacity: 100,
         details: 'Tester',
-        status: 'Upcoming',
+        status: 'upcoming',
         price: 1000,
         category: 'test',
       };
@@ -233,7 +255,7 @@ describe('/events endpoint testing for LocalLink', () => {
         },
         organiser: 2,
         details: 'Tester',
-        status: 'Upcoming',
+        status: 'upcoming',
         price: 1000,
         category: 'test',
       };
@@ -285,7 +307,7 @@ describe('/events/:id endpoint testing for LocalLink', () => {
         organiser: 1,
         capacity: 50,
         details: 'Another test event',
-        status: 'Upcoming',
+        status: 'upcoming',
         price: 100,
         category: 'test',
       };
