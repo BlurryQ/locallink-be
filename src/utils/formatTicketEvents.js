@@ -1,6 +1,12 @@
+const { formatEventData } = require('./formatEventData');
+const { formatTicketData } = require('./formatTicketData');
+
 exports.formatTicketEvents = (tickets, events) => {
-  return tickets.map((ticket, index) => {
-    const event = events[index];
+  const formattedTickets = tickets.map(formatTicketData);
+  const formattedEvents = events.map(formatEventData);
+
+  return formattedTickets.map((ticket, index) => {
+    const event = formattedEvents[index];
     return {
       ticket_id: ticket.id,
       event_id: event.id,
