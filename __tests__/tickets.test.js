@@ -2,6 +2,8 @@ const request = require('supertest');
 const { app } = require('../src');
 require('jest-sorted');
 
+let events = [];
+
 describe('/events endpoint testing for LocalLink', () => {
   describe('GET /events - returns an array of objects containing ticket information', () => {
     it('200: returns an array', () => {
@@ -37,12 +39,10 @@ describe('/events endpoint testing for LocalLink', () => {
     it("200: returns the ticket objects filtered by 'owner_id'", () => {
       const returnArr = [
         {
-          event_id: 1,
           owner_id: 1,
           price: 100,
         },
         {
-          event_id: 2,
           owner_id: 1,
           price: 200,
         },
@@ -53,9 +53,10 @@ describe('/events endpoint testing for LocalLink', () => {
         .then(({ body }) => {
           expect(Array.isArray(body.tickets)).toBe(true);
           expect(body.tickets[0]).toHaveProperty('id');
+          expect(body.tickets[0]).toHaveProperty('event_id');
           expect(body.tickets[0]).toHaveProperty('purchased');
           const ticketsWithoutPurchaseDateAndID = body.tickets.map(
-            ({ purchased, id, ...rest }) => rest
+            ({ purchased, id, event_id, ...rest }) => rest
           );
           expect(ticketsWithoutPurchaseDateAndID).toEqual(returnArr);
         });
@@ -74,7 +75,7 @@ describe('/events endpoint testing for LocalLink', () => {
   describe('POST /tickets - returns successfully posted ticket with an id', () => {
     it('201: returns the posted ticket object with an id', () => {
       const newTicket = {
-        event_id: 3,
+        event_id: '647f92b0c3a1d',
         owner_id: 2,
         price: 300,
       };
@@ -112,6 +113,11 @@ describe('/events endpoint testing for LocalLink', () => {
 describe('/tickets/:id endpoint testing for LocalLink', () => {
   describe('GET /tickets/:id - returns ticket object from ID', () => {
     it('200: returns correct ticket object', () => {
+      request(app)
+        .get('/events')
+        .then(({ body }) => {
+          events = body.events;
+        });
       return request(app)
         .get('/tickets')
         .expect(200)
@@ -122,7 +128,7 @@ describe('/tickets/:id endpoint testing for LocalLink', () => {
             .expect(200)
             .then(({ body }) => {
               const ticket = {
-                event_id: 1,
+                event_id: events[2].id,
                 owner_id: 1,
                 price: 100,
               };
