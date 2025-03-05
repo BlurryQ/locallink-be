@@ -6,7 +6,6 @@ const {
   deleteTicket,
 } = require('../models/tickets.model');
 const { formatTicketData } = require('../utils/formatTicketData');
-require('dotenv').config();
 
 exports.getAllTickets = async (req, res) => {
   try {
