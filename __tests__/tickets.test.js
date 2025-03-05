@@ -1,6 +1,5 @@
 const request = require('supertest');
 const { app } = require('../src');
-require('jest-sorted');
 
 let events = [];
 
