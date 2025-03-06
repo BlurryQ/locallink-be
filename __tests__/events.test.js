@@ -130,6 +130,7 @@ describe('/events endpoint testing for LocalLink', () => {
               status: 'upcoming',
               price: 100,
               category: 'test',
+              image_url: 'default',
             },
             {
               name: 'test',
@@ -149,6 +150,7 @@ describe('/events endpoint testing for LocalLink', () => {
               status: 'upcoming',
               price: 100,
               category: 'testing',
+              image_url: 'default',
             },
           ];
           const eventsWithoutIDsAndCreationDate = body.events.map(
@@ -204,6 +206,7 @@ describe('/events endpoint testing for LocalLink', () => {
         status: 'upcoming',
         price: 1000,
         category: 'test',
+        image_url: 'https://http.dog/201.jpg',
       };
       return request(app)
         .post('/events')
