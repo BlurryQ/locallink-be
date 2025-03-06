@@ -1,0 +1,117 @@
+{
+  "/events": {
+    "GET": {
+      "description": "Returns an array of event objects containing event information.",
+      "query_params": {
+        "category": "Filter events by category",
+        "isFree": "Filter events that are free (true/false)",
+        "recent": "Sort by most recently added (true/false)",
+        "organiser": "Filter by event organiser ID",
+        "status": "Filter by event status (upcoming or past)",
+        "lat": "Latitude for location-based filtering",
+        "long": "Longitude for location-based filtering",
+        "radius": "Radius in miles for location filtering"
+      },
+      "example_response": "----------------------------------------------------"
+    },
+    "POST": {
+      "description": "Creates a new event and returns the posted object.",
+      "body": {
+        "name": "Event title (string, required)",
+        "start": "Event start date & time (ISO format, required)",
+        "end": "Event date & time (ISO format, required)",
+        "location": "Event location details (object, required)",
+        "capacity": "Total tickets available (integer, required)",
+        "details": "Event details (string, required)",
+        "status": "Event status, should be 'upcoming' (string, required)",
+        "price": "The cost of the event in pence (integer, required)",
+        "category": "Category of event (string, required)",
+        "image_url": "Link to the image for the event (string, optional)"
+      },
+      "example_response": "----------------------------------------------------"
+    }
+  },
+  "/events/:id": {
+    "GET": {
+      "description": "Returns a specific event by its ID.",
+      "params": {
+        "id": "Unique event identifier"
+      },
+      "example_return": "----------------------------------------------------"
+    },
+    "PATCH": {
+      "description": "Updates an event by ID and returns the updated object.",
+      "body": {
+        "name": "Event title (string, optional)",
+        "start": "Event start date & time (ISO format, optional)",
+        "end": "Event date & time (ISO format, optional)",
+        "location": "Event location details (object, optional)",
+        "capacity": "Total tickets available (integer, optional)",
+        "details": "Event details (string, optional)",
+        "status": "Event status, should be 'upcoming' (string, optional)",
+        "price": "The cost of the event in pence (integer, optional)",
+        "category": "Category of event (string, optional)",
+        "image_url": "Link to the image for the event (string, optional)"
+      },
+      "example_response": "----------------------------------------------------"
+    },
+    "DELETE": {
+      "description": "Deletes a specific event by its ID."
+    }
+  },
+  "/tickets": {
+    "GET": {
+      "description": "Returns an array of ticket objects.",
+      "query_params": {
+        "owner_id": "Filter tickets by owner ID"
+      },
+      "example_response": "----------------------------------------------------"
+    },
+    "POST": {
+      "description": "Creates a new ticket.",
+      "body": {
+        "event_id": "ID of the event (string, required)",
+        "owner_id": "ID of the user purchasing the ticket (string, required)"
+      },
+      "responses": {
+        "201": "Successfully created ticket",
+        "400": "Bad request if missing required properties"
+      }
+    }
+  },
+  "/tickets/:id": {
+    "GET": {
+      "description": "Returns a specific ticket by ID.",
+      "responses": {
+        "200": "Returns the ticket object",
+        "404": "Not found if ticket ID is invalid"
+      }
+    },
+    "PATCH": {
+      "description": "Updates a ticket and returns the updated object.",
+      "responses": {
+        "200": "Successfully updated ticket",
+        "400": "Bad request if invalid properties"
+      }
+    },
+    "DELETE": {
+      "description": "Deletes a ticket by ID.",
+      "responses": {
+        "204": "Successfully deleted",
+        "400": "Bad request if ticket ID does not exist"
+      }
+    }
+  },
+  "/tickets/events/:owner_id": {
+    "GET": {
+      "description": "Returns tickets filtered by owner ID.",
+      "params": {
+        "owner_id": "User ID whose tickets are being retrieved"
+      },
+      "responses": {
+        "200": "Returns an array of ticket objects",
+        "200 (empty array)": "No tickets found for this user"
+      }
+    }
+  }
+}
