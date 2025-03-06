@@ -16,7 +16,8 @@
     "details": "A test event",
     "status": "upcoming",
     "price": 100,
-    "category": "testing"
+    "category": "testing",
+    "image_url": "default"
   },
   {
     "name": "test 2",
@@ -35,7 +36,8 @@
     "details": "Another test event",
     "status": "upcoming",
     "price": 100,
-    "category": "test"
+    "category": "test",
+    "image_url": "default"
   },
   {
     "name": "test 3",
@@ -54,7 +56,8 @@
     "details": "Test event",
     "status": "upcoming",
     "price": 0,
-    "category": "testing"
+    "category": "testing",
+    "image_url": "default"
   },
   {
     "name": "pre test",
@@ -73,6 +76,7 @@
     "details": "Another test event",
     "status": "past",
     "price": 100,
-    "category": "test"
+    "category": "test",
+    "image_url": "default"
   }
 ]

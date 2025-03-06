@@ -1,6 +1,5 @@
 const request = require('supertest');
 const { app } = require('../src');
-require('jest-sorted');
 
 let events = [];
 
@@ -27,13 +26,13 @@ describe('/events endpoint testing for LocalLink', () => {
           expect(event).toHaveProperty('price');
         });
     });
-    it('200: returns the total of ticket objects correctly (3)', () => {
+    it('200: returns the total of ticket objects correctly (4)', () => {
       return request(app)
         .get('/tickets')
         .expect(200)
         .then(({ body }) => {
-          expect(body.tickets.length).toBe(3);
-          expect(body.total).toBe(3);
+          expect(body.tickets.length).toBe(4);
+          expect(body.total).toBe(4);
         });
     });
     it("200: returns the ticket objects filtered by 'owner_id'", () => {
@@ -41,6 +40,10 @@ describe('/events endpoint testing for LocalLink', () => {
         {
           owner_id: 1,
           price: 100,
+        },
+        {
+          owner_id: 1,
+          price: 200,
         },
         {
           owner_id: 1,
