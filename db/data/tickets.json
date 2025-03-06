@@ -13,5 +13,10 @@
     "event_id": 2,
     "owner_id": 2,
     "price": 0
+  },
+  {
+    "event_id": 2,
+    "owner_id": 1,
+    "price": 200
   }
 ]
