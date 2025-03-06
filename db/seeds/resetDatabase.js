@@ -69,6 +69,6 @@ const seedAttributes = async () => {
   }
 };
 
-// resetDatabase();
+if (ENV === 'development') resetDatabase();
 
 module.exports = { resetDatabase };
