@@ -10,6 +10,7 @@ const { formatTicketData } = require('../utils/formatTicketData');
 exports.getAllTickets = async (req, res) => {
   try {
     const { owner_id } = req.query;
+    // owner_id is optional
     const data = await selectAllTickets(owner_id);
     const tickets = data.documents.map(formatTicketData);
     const formattedTickets = { tickets, total: data.total };

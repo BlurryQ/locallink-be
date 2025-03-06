@@ -12,6 +12,7 @@ exports.getAllEvents = async (req, res) => {
   const { category, lat, long, radius, isFree, recent, organiser, status } =
     req.query;
   const queries = { status, category, organiser, isFree };
+  // all queries are optional
   try {
     const data = await selectAllEvents(recent, queries);
     let events = data.documents.map(formatEventData);
