@@ -405,7 +405,7 @@ describe('/events/:id endpoint testing for LocalLink', () => {
             .then((body) => {
               expect(body.body).toEqual({});
               return request(app)
-                .get('/events' + id)
+                .get('/events/' + id)
                 .expect(404);
             });
         });

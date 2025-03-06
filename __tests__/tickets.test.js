@@ -198,7 +198,7 @@ describe('/tickets/:id endpoint testing for LocalLink', () => {
   });
 
   describe('DELETE /tickets/:id - successfully deletes the chosen ticket', () => {
-    it('200: successfully deletes the ticket by id', () => {
+    it('204: successfully deletes the ticket by id', () => {
       return request(app)
         .get('/tickets')
         .expect(200)
@@ -210,7 +210,7 @@ describe('/tickets/:id endpoint testing for LocalLink', () => {
             .then((body) => {
               expect(body.body).toEqual({});
               return request(app)
-                .get('/tickets' + ticketID)
+                .get('/tickets/' + ticketID)
                 .expect(404);
             });
         });
