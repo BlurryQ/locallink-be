@@ -12,7 +12,66 @@
         "long": "Longitude for location-based filtering",
         "radius": "Radius in miles for location filtering"
       },
-      "example_response": "----------------------------------------------------"
+      "responses": {
+        "200": "Returns an array of event objects"
+      },
+      "example_response": {
+        "tickets": {
+          "events": [
+            {
+              "id": "67c99adc0f377b6c8dde",
+              "name": "test 2",
+              "createdAt": "2025-03-06T12:53:48.067+00:00",
+              "start": "2025-06-12T19:00:00.000+00:00",
+              "end": "2025-06-12T21:30:00.000+00:00",
+              "location": {
+                "name": "The Pub",
+                "street": "123 Main St",
+                "city": "Manchester",
+                "postcode": "M2 3AW",
+                "country": "UK",
+                "coords": {
+                  "lat": 53.48169,
+                  "long": -2.24089
+                }
+              },
+              "organiser": 1,
+              "capacity": 50,
+              "details": "Another test event",
+              "status": "upcoming",
+              "price": 100,
+              "image_url": "default",
+              "category": "test"
+            },
+            {
+              "id": "67c99adc315ccd9c775f",
+              "name": "test 3",
+              "createdAt": "2025-03-06T12:53:48.208+00:00",
+              "start": "2025-06-13T19:00:00.000+00:00",
+              "end": "2025-06-13T21:30:00.000+00:00",
+              "location": {
+                "name": "The Pub",
+                "street": "123 Main St",
+                "city": "Liverpool",
+                "postcode": "CH41 5LH",
+                "country": "UK",
+                "coords": {
+                  "lat": 53.39047,
+                  "long": -3.00847
+                }
+              },
+              "organiser": 2,
+              "capacity": 150,
+              "details": "Test event",
+              "status": "upcoming",
+              "price": 0,
+              "image_url": "default",
+              "category": "testing"
+            }
+          ],
+          "total": 2
+        }
+      }
     },
     "POST": {
       "description": "Creates a new event and returns the posted object.",
@@ -28,7 +87,35 @@
         "category": "Category of event (string, required)",
         "image_url": "Link to the image for the event (string, optional)"
       },
-      "example_response": "----------------------------------------------------"
+      "responses": {
+        "201": "Successfully created event and returns the event object",
+        "400": "Bad request if missing required properties"
+      },
+      "example_response": {
+        "id": "67cb4183635459a37c4b",
+        "name": "New Event",
+        "createdAt": "2025-03-07T18:57:07.408+00:00",
+        "start": "2025-06-14T19:00:00.000+00:00",
+        "end": "2025-06-14T21:30:00.000+00:00",
+        "location": {
+          "name": "The Pub",
+          "street": "123 Main St",
+          "city": "Liverpool",
+          "postcode": "CH41 5LH",
+          "country": "UK",
+          "coords": {
+            "lat": 53.39047,
+            "long": -3.00847
+          }
+        },
+        "organiser": 2,
+        "capacity": 100,
+        "details": "Tester",
+        "status": "Upcoming",
+        "price": 1000,
+        "image_url": null,
+        "category": "test"
+      }
     }
   },
   "/events/:id": {
@@ -37,7 +124,35 @@
       "params": {
         "id": "Unique event identifier"
       },
-      "example_return": "----------------------------------------------------"
+      "responses": {
+        "200": "Returns the event object",
+        "404": "Not found if event ID is invalid"
+      },
+      "example_response": {
+        "id": "67cb4183635459a37c4b",
+        "name": "New Event",
+        "createdAt": "2025-03-07T18:57:07.408+00:00",
+        "start": "2025-06-14T19:00:00.000+00:00",
+        "end": "2025-06-14T21:30:00.000+00:00",
+        "location": {
+          "name": "The Pub",
+          "street": "123 Main St",
+          "city": "Liverpool",
+          "postcode": "CH41 5LH",
+          "country": "UK",
+          "coords": {
+            "lat": 53.39047,
+            "long": -3.00847
+          }
+        },
+        "organiser": 2,
+        "capacity": 100,
+        "details": "Tester",
+        "status": "Upcoming",
+        "price": 1000,
+        "image_url": null,
+        "category": "test"
+      }
     },
     "PATCH": {
       "description": "Updates an event by ID and returns the updated object.",
@@ -48,15 +163,48 @@
         "location": "Event location details (object, optional)",
         "capacity": "Total tickets available (integer, optional)",
         "details": "Event details (string, optional)",
-        "status": "Event status, should be 'upcoming' (string, optional)",
+        "status": "Event status, either 'upcoming' or 'past (string, optional)",
         "price": "The cost of the event in pence (integer, optional)",
         "category": "Category of event (string, optional)",
         "image_url": "Link to the image for the event (string, optional)"
       },
-      "example_response": "----------------------------------------------------"
+      "responses": {
+        "200": "Successfully updated event",
+        "400": "Bad request if event ID is invalid"
+      },
+      "example_response": {
+        "id": "67cb4183635459a37c4b",
+        "name": "New Event",
+        "createdAt": "2025-03-07T18:57:07.408+00:00",
+        "start": "2025-06-14T19:00:00.000+00:00",
+        "end": "2025-06-14T21:30:00.000+00:00",
+        "location": {
+          "name": "The Pub",
+          "street": "123 Main St",
+          "city": "Liverpool",
+          "postcode": "CH41 5LH",
+          "country": "UK",
+          "coords": {
+            "lat": 53.39047,
+            "long": -3.00847
+          }
+        },
+        "organiser": 2,
+        "capacity": 250,
+        "details": "Some interesting facts.",
+        "status": "upcoming",
+        "price": 0,
+        "image_url": "default",
+        "category": "testing"
+      }
     },
     "DELETE": {
-      "description": "Deletes a specific event by its ID."
+      "description": "Deletes a specific event by its ID.",
+      "responses": {
+        "204": "Successfully deleted event",
+        "400": "Bad request if ID does not exist"
+      },
+      "example_response": ""
     }
   },
   "/tickets": {
@@ -65,17 +213,46 @@
       "query_params": {
         "owner_id": "Filter tickets by owner ID"
       },
-      "example_response": "----------------------------------------------------"
+      "responses": {
+        "200": "Returns an array of ticket objects, or empty array if owner doesn't exist when queried"
+      },
+      "example_response": {
+        "tickets": [
+          {
+            "id": "67c99adca4a87537408f",
+            "event_id": "67c99adbdd7f7d308508",
+            "owner_id": 1,
+            "price": 100,
+            "purchased": "2025-03-06T12:53:48.688+00:00"
+          },
+          {
+            "id": "67c99adce2f5e6a43b5f",
+            "event_id": "67c99adc0f377b6c8dde",
+            "owner_id": 1,
+            "price": 200,
+            "purchased": "2025-03-06T12:53:48.932+00:00"
+          }
+        ],
+        "total": 4
+      }
     },
     "POST": {
       "description": "Creates a new ticket.",
       "body": {
-        "event_id": "ID of the event (string, required)",
-        "owner_id": "ID of the user purchasing the ticket (string, required)"
+        "event_id": "ID of the event (uid as string, required)",
+        "owner_id": "ID of the user purchasing the ticket (uid as string, required)",
+        "price": "price of the ticket purchased (integer, required)"
       },
       "responses": {
         "201": "Successfully created ticket",
         "400": "Bad request if missing required properties"
+      },
+      "example_response": {
+        "id": "67cb44af553b0f6edebf",
+        "event_id": "67c99adbdd7f7d308508",
+        "owner_id": 1,
+        "price": 10000,
+        "purchased": "2025-03-07T19:10:39.350+00:00"
       }
     }
   },
@@ -85,32 +262,75 @@
       "responses": {
         "200": "Returns the ticket object",
         "404": "Not found if ticket ID is invalid"
+      },
+      "example_response": {
+        "id": "67cb44af553b0f6edebf",
+        "event_id": "67c99adbdd7f7d308508",
+        "owner_id": 1,
+        "price": 10000,
+        "purchased": "2025-03-07T19:10:39.350+00:00"
       }
     },
     "PATCH": {
       "description": "Updates a ticket and returns the updated object.",
+      "body": {
+        "price": "price of the ticket purchased (integer, optional)"
+      },
       "responses": {
         "200": "Successfully updated ticket",
         "400": "Bad request if invalid properties"
+      },
+      "example_response": {
+        "id": "67cb44af553b0f6edebf",
+        "event_id": "67c99adbdd7f7d308508",
+        "owner_id": 1,
+        "price": 1000,
+        "purchased": "2025-03-07T19:10:39.350+00:00"
       }
     },
     "DELETE": {
-      "description": "Deletes a ticket by ID.",
-      "responses": {
-        "204": "Successfully deleted",
-        "400": "Bad request if ticket ID does not exist"
-      }
-    }
+      "description": "Deletes a ticket by ID."
+    },
+    "responses": {
+      "204": "Successfully deleted",
+      "400": "Bad request if ticket ID does not exist"
+    },
+    "example_response": ""
   },
   "/tickets/events/:owner_id": {
     "GET": {
-      "description": "Returns tickets filtered by owner ID.",
+      "description": "Returns tickets and events joined data filtered by owner ID.",
       "params": {
         "owner_id": "User ID whose tickets are being retrieved"
       },
       "responses": {
-        "200": "Returns an array of ticket objects",
-        "200 (empty array)": "No tickets found for this user"
+        "200": "Returns an array of ticket objects, or empty array if owner doesn't exist"
+      },
+      "example_response": {
+        "tickets": [
+          {
+            "ticket_id": "67c99add2eb8e3e20423",
+            "event_id": "67c99adc0f377b6c8dde",
+            "name": "test 2",
+            "start": "2025-06-12T19:00:00.000+00:00",
+            "end": "2025-06-12T21:30:00.000+00:00",
+            "location": {
+              "name": "The Pub",
+              "street": "123 Main St",
+              "city": "Manchester",
+              "postcode": "M2 3AW",
+              "country": "UK",
+              "coords": {
+                "lat": 53.48169,
+                "long": -2.24089
+              }
+            },
+            "status": "upcoming",
+            "image_url": "default",
+            "total_tickets": 1
+          }
+        ],
+        "total": 1
       }
     }
   }
