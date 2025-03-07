@@ -175,9 +175,10 @@ describe('/tickets/:id endpoint testing for LocalLink', () => {
             });
         });
     });
-    it('400: returns the patched ticket', () => {
+    it('400: errors if properties sent that do not exist or not allowed', () => {
       const newPrice = {
         bob: 'bob',
+        event_id: 'a3bf6c63-03be-4021-9ac2-909d961aecea',
       };
       return request(app)
         .get('/tickets')
@@ -190,7 +191,7 @@ describe('/tickets/:id endpoint testing for LocalLink', () => {
             .expect(400)
             .then(({ body }) => {
               expect(body.error).toBe(
-                'Invalid document structure: Unknown attribute: "bob"'
+                'The document data and permissions are missing. You must provide either document data or permissions to be updated.'
               );
             });
         });
