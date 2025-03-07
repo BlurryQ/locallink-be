@@ -35,12 +35,12 @@ exports.selectTicketByID = async (ticketID) => {
   );
 };
 
-exports.patchTicket = async (ticketID, ticketData) => {
+exports.patchTicket = async (ticketID, price = {}) => {
   return await databases.updateDocument(
     process.env.APPWRITE_DATABASE_ID,
     process.env.APPWRITE_TICKETS_TABLE,
     ticketID,
-    ticketData
+    price
   );
 };
 

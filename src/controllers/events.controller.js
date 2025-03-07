@@ -59,6 +59,8 @@ exports.editEvent = async (req, res) => {
   try {
     const { eventID } = req.params;
     const eventData = req.body;
+    // safety so event organiser cannot be changed
+    if (Object.hasOwn(eventData, 'organiser')) delete eventData.organiser;
     eventData.location = JSON.stringify(eventData.location);
     const updatedEventData = await patchEvent(eventID, eventData);
     const updatedEvent = formatEventData(updatedEventData);
