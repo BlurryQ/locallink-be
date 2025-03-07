@@ -48,8 +48,8 @@ exports.getTicketByID = async (req, res) => {
 exports.editTicket = async (req, res) => {
   try {
     const { ticketID } = req.params;
-    const ticketData = req.body;
-    const data = await patchTicket(ticketID, ticketData);
+    let { price } = req.body;
+    const data = await patchTicket(ticketID, { price });
     const ticket = formatTicketData(data);
     res.status(200).send(ticket);
   } catch (err) {
