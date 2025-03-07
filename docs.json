@@ -289,13 +289,13 @@
       }
     },
     "DELETE": {
-      "description": "Deletes a ticket by ID."
-    },
-    "responses": {
-      "204": "Successfully deleted",
-      "400": "Bad request if ticket ID does not exist"
-    },
-    "example_response": ""
+      "description": "Deletes a ticket by ID.",
+      "responses": {
+        "204": "Successfully deleted",
+        "400": "Bad request if ticket ID does not exist"
+      },
+      "example_response": ""
+    }
   },
   "/tickets/events/:owner_id": {
     "GET": {
