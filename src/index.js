@@ -1,7 +1,16 @@
 const express = require('express');
 const { apiRouter } = require('./routes');
+const cors = require('cors');
 
 const app = express();
+
+// Allow requests from your frontend
+app.use(
+  cors({
+    // Change this to your frontend URL
+    origin: 'http://localhost:5173',
+  })
+);
 
 app.use(express.json());
 
