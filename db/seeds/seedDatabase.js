@@ -17,14 +17,16 @@ const seedCollection = async (collectionID, dataPath) => {
   for (const item of data) {
     // if event data stringify location obj
     if (item.location) item.location = JSON.stringify(item.location);
-    else {
-      const events = await databases.listDocuments(
+    // if ticket data match int to string uid
+    else if (item.owner_id) {
+      // get data from events table and match
+      const ticket = await databases.listDocuments(
         process.env.APPWRITE_DATABASE_ID,
         process.env.APPWRITE_EVENTS_TABLE
       );
-      item.event_id = events.documents[count].$id;
+      item.event_id = ticket.documents[count].$id;
     }
-    await databases.createDocument(
+    const res = await databases.createDocument(
       process.env.APPWRITE_DATABASE_ID,
       collectionID,
       'unique()',
