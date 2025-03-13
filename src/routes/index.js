@@ -2,11 +2,14 @@ const express = require('express');
 const apiRouter = express.Router();
 const { eventsRouter } = require('./events.router');
 const { ticketsRouter } = require('./tickets.router');
+const { usersRouter } = require('./users.router');
 const { docsRouter } = require('./docs.router');
 
 apiRouter.use('/events', eventsRouter);
 
 apiRouter.use('/tickets', ticketsRouter);
+
+apiRouter.use('/users', usersRouter);
 
 apiRouter.get('/', docsRouter);
 
