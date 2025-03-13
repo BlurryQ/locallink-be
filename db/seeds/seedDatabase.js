@@ -15,6 +15,7 @@ const seedCollection = async (collectionID, dataPath) => {
   // count is used to assign ids programmatically (eg 1, 2 and 2)
   let count = 0;
   for (const item of data) {
+    // if event data stringify location obj
     if (item.location) item.location = JSON.stringify(item.location);
     else {
       const events = await databases.listDocuments(
@@ -45,6 +46,11 @@ const seedDatabase = async () => {
       './db/data/tickets.json'
     );
     if (debugging) console.log('✅ Tickets seeded!');
+    await seedCollection(
+      process.env.APPWRITE_USERS_TABLE,
+      './db/data/users.json'
+    );
+    if (debugging) console.log('✅ Users seeded!');
 
     if (debugging) console.log('✅ Database seeded! ✅');
   } catch (err) {

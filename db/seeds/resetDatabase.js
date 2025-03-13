@@ -7,9 +7,11 @@ const { databases } = require('../../src/config/appwrite');
 const { Permission, Role } = require('node-appwrite');
 const { eventsAttributes } = require('../attributes/events.attribute');
 const { ticketsAttributes } = require('../attributes/tickets.attribute');
+const { usersAttributes } = require('../attributes/users.attribute');
 const db = process.env.APPWRITE_DATABASE_ID;
 const eventsTable = process.env.APPWRITE_EVENTS_TABLE;
 const ticketsTable = process.env.APPWRITE_TICKETS_TABLE;
+const usersTable = process.env.APPWRITE_USERS_TABLE;
 
 // change to true to see all logs
 const debugging = false;
@@ -29,6 +31,8 @@ const dropCollections = async () => {
     if (debugging) console.log('✅ Events dropped!');
     await databases.deleteCollection(db, ticketsTable);
     if (debugging) console.log('✅ Tickets dropped!');
+    await databases.deleteCollection(db, usersTable);
+    if (debugging) console.log('✅ Users dropped!');
     if (debugging) console.log('✅ Collections dropped! ✅');
   } catch (err) {
     if (debugging) console.error('Error dropping collections:', err);
@@ -49,6 +53,8 @@ const createCollections = async () => {
     if (debugging) console.log('✅ Events collection recreated!');
     await databases.createCollection(db, ticketsTable, 'tickets', permissions);
     if (debugging) console.log('✅ Tickets collection recreated!');
+    await databases.createCollection(db, usersTable, 'users', permissions);
+    if (debugging) console.log('✅ Users collection recreated!');
 
     if (debugging) console.log('✅ All collections recreated! ✅');
   } catch (err) {
@@ -63,6 +69,8 @@ const seedAttributes = async () => {
     if (debugging) console.log('✅ Event attributes recreated!');
     await ticketsAttributes(databases, db, ticketsTable);
     if (debugging) console.log('✅ Ticket attributes recreated!');
+    await usersAttributes(databases, db, usersTable);
+    if (debugging) console.log('✅ Users attributes recreated!');
     if (debugging) console.log('✅ All attributes recreated! ✅');
   } catch (err) {
     if (debugging) console.error('Error seeding attributes:', err);
