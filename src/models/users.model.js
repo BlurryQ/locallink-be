@@ -3,6 +3,7 @@ require('dotenv').config({
   path: `${__dirname}/../../.env.${ENV}`,
 });
 
+const { Query } = require('node-appwrite');
 const { databases } = require('../config/appwrite');
 
 exports.postUser = async (newUser) => {
@@ -11,6 +12,14 @@ exports.postUser = async (newUser) => {
     process.env.APPWRITE_USERS_TABLE,
     'unique()',
     newUser
+  );
+};
+
+exports.selectUserByEmail = async (email) => {
+  return await databases.listDocuments(
+    process.env.APPWRITE_DATABASE_ID,
+    process.env.APPWRITE_USERS_TABLE,
+    [Query.equal('email', email)]
   );
 };
 
