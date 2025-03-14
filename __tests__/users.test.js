@@ -6,7 +6,7 @@ const newUser = {
   password: 'User@04!',
 };
 
-describe.only('/users endpoint testing for LocalLink', () => {
+describe('/users endpoint testing for LocalLink', () => {
   describe('POST /users - posts new user', () => {
     it('201: successfully posts a new user to endpoint and recieves user object back', () => {
       return request(app)
@@ -18,6 +18,17 @@ describe.only('/users endpoint testing for LocalLink', () => {
           const { id, ...rest } = body;
           expect(rest).toEqual(newUser);
           newUser.id = id;
+        });
+    });
+  });
+
+  describe('GET /users?email=:email - retrieves the specified user obj', () => {
+    it('200: successfully retrieves the specified user obj', () => {
+      return request(app)
+        .get('/users' + '?email=' + newUser.email)
+        .expect(200)
+        .then(({ body }) => {
+          expect(body).toEqual(newUser);
         });
     });
   });
