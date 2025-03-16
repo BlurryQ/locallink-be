@@ -19,7 +19,7 @@ exports.selectAllEvents = async (recent = false, reqQueries) => {
   const queries = [order];
   if (status) queries.push(Query.equal('status', status));
   if (category) queries.push(Query.equal('category', category));
-  if (organiser) queries.push(Query.equal('organiser', Number(organiser)));
+  if (organiser) queries.push(Query.equal('organiser', organiser));
   if (isFree) queries.push(Query.equal('price', 0));
   return await databases.listDocuments(
     process.env.APPWRITE_DATABASE_ID,

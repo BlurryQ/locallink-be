@@ -9,7 +9,7 @@ const { databases } = require('../config/appwrite');
 exports.selectAllTickets = async (owner_id) => {
   let query = [];
   if (owner_id) {
-    query.push(Query.equal('owner_id', Number(owner_id)));
+    query.push(Query.equal('owner_id', owner_id));
   }
   return await databases.listDocuments(
     process.env.APPWRITE_DATABASE_ID,
