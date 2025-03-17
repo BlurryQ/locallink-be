@@ -4,8 +4,11 @@ const { eventsRouter } = require('./events.router');
 const { ticketsRouter } = require('./tickets.router');
 const { usersRouter } = require('./users.router');
 const { docsRouter } = require('./docs.router');
+const { googleRouter } = require('./google.router.js');
 
 apiRouter.use('/events', eventsRouter);
+
+apiRouter.use('/google', googleRouter);
 
 apiRouter.use('/tickets', ticketsRouter);
 
