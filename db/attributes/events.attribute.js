@@ -9,7 +9,7 @@ exports.eventsAttributes = async (databases, db, eventsTable) => {
     1024,
     true
   );
-  await databases.createIntegerAttribute(db, eventsTable, 'organiser', true);
+  await databases.createStringAttribute(db, eventsTable, 'organiser', 36, true);
   await databases.createIntegerAttribute(db, eventsTable, 'capacity', true);
   await databases.createStringAttribute(db, eventsTable, 'details', 2048, true);
   await databases.createStringAttribute(db, eventsTable, 'status', 32, true);

@@ -1,10 +1,10 @@
 const express = require('express');
 const apiRouter = express.Router();
 const { eventsRouter } = require('./events.router');
+const { googleRouter } = require('./google.router.js');
 const { ticketsRouter } = require('./tickets.router');
 const { usersRouter } = require('./users.router');
 const { docsRouter } = require('./docs.router');
-const { googleRouter } = require('./google.router.js');
 
 apiRouter.use('/events', eventsRouter);
 
