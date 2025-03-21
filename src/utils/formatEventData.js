@@ -11,7 +11,6 @@ exports.formatEventData = (rawData) => {
     details: rawData.details,
     status: rawData.status,
     price: rawData.price,
-    image_url: rawData.image_url,
     category: rawData.category,
   };
 };

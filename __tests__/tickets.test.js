@@ -2,6 +2,8 @@ const request = require('supertest');
 const { app } = require('../src');
 
 let events = [];
+let ticketOwner1 = '';
+let ticketOwner2 = '';
 
 describe('/events endpoint testing for LocalLink', () => {
   describe('GET /events - returns an array of objects containing ticket information', () => {
@@ -36,32 +38,39 @@ describe('/events endpoint testing for LocalLink', () => {
         });
     });
     it("200: returns the ticket objects filtered by 'owner_id'", () => {
-      const returnArr = [
-        {
-          owner_id: 1,
-          price: 100,
-        },
-        {
-          owner_id: 1,
-          price: 200,
-        },
-        {
-          owner_id: 1,
-          price: 200,
-        },
-      ];
-      return request(app)
-        .get('/tickets' + '?owner_id=1')
-        .expect(200)
+      request(app)
+        .get('/tickets')
         .then(({ body }) => {
-          expect(Array.isArray(body.tickets)).toBe(true);
-          expect(body.tickets[0]).toHaveProperty('id');
-          expect(body.tickets[0]).toHaveProperty('event_id');
-          expect(body.tickets[0]).toHaveProperty('purchased');
-          const ticketsWithoutPurchaseDateAndID = body.tickets.map(
-            ({ purchased, id, event_id, ...rest }) => rest
-          );
-          expect(ticketsWithoutPurchaseDateAndID).toEqual(returnArr);
+          ticketOwner1 = body.tickets[0].owner_id;
+          ticketOwner2 = body.tickets[1].owner_id;
+
+          const returnArr = [
+            {
+              owner_id: ticketOwner1,
+              price: 100,
+            },
+            {
+              owner_id: ticketOwner1,
+              price: 200,
+            },
+            {
+              owner_id: ticketOwner1,
+              price: 200,
+            },
+          ];
+          return request(app)
+            .get('/tickets' + '?owner_id=' + ticketOwner1)
+            .expect(200)
+            .then(({ body }) => {
+              expect(Array.isArray(body.tickets)).toBe(true);
+              expect(body.tickets[0]).toHaveProperty('id');
+              expect(body.tickets[0]).toHaveProperty('event_id');
+              expect(body.tickets[0]).toHaveProperty('purchased');
+              const ticketsWithoutPurchaseDateAndID = body.tickets.map(
+                ({ purchased, id, event_id, ...rest }) => rest
+              );
+              expect(ticketsWithoutPurchaseDateAndID).toEqual(returnArr);
+            });
         });
     });
     it('200: returns empty array if no tickets are found', () => {
@@ -78,8 +87,8 @@ describe('/events endpoint testing for LocalLink', () => {
   describe('POST /tickets - returns successfully posted ticket with an id', () => {
     it('201: returns the posted ticket object with an id', () => {
       const newTicket = {
-        event_id: '647f92b0c3a1d',
-        owner_id: 2,
+        event_id: '647f92b0c3a1a',
+        owner_id: '647f92b0c3a1z',
         price: 300,
       };
       return request(app)
@@ -132,7 +141,7 @@ describe('/tickets/:id endpoint testing for LocalLink', () => {
             .then(({ body }) => {
               const ticket = {
                 event_id: events[2].id,
-                owner_id: 1,
+                owner_id: ticketOwner1,
                 price: 100,
               };
               const { id, purchased, ...rest } = body;

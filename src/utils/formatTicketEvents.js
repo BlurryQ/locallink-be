@@ -15,7 +15,6 @@ exports.formatTicketEvents = (tickets, events) => {
       end: event.end,
       location: event.location,
       status: event.status,
-      image_url: event.image_url,
     };
   });
 };

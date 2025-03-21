@@ -113,7 +113,7 @@ describe('/events endpoint testing for LocalLink', () => {
         .then(({ body }) => {
           const returnArr = [
             {
-              name: 'test 2',
+              name: 'testAI workshop: bringing testing to life',
               start: '2025-06-12T19:00:00.000+00:00',
               end: '2025-06-12T21:30:00.000+00:00',
               location: {
@@ -124,16 +124,15 @@ describe('/events endpoint testing for LocalLink', () => {
                 country: 'UK',
                 coords: { lat: 53.48169, long: -2.24089 },
               },
-              organiser: 1,
+              organiser: '1',
               capacity: 50,
-              details: 'Another test event',
+              details: 'How to bring your Ai to to a testing success!',
               status: 'upcoming',
               price: 100,
-              category: 'test',
-              image_url: 'default',
+              category: 'tech & AI',
             },
             {
-              name: 'test',
+              name: 'a mountain of test',
               start: '2025-06-18T19:00:00.000+00:00',
               end: '2025-06-18T21:30:00.000+00:00',
               location: {
@@ -144,13 +143,12 @@ describe('/events endpoint testing for LocalLink', () => {
                 country: 'UK',
                 coords: { lat: 53.48169, long: -2.24089 },
               },
-              organiser: 1,
+              organiser: '1',
               capacity: 50,
-              details: 'A test event',
+              details: 'A massive amount of testing is about to comence.',
               status: 'upcoming',
               price: 100,
-              category: 'testing',
-              image_url: 'default',
+              category: 'arts & culture',
             },
           ];
           const eventsWithoutIDsAndCreationDate = body.events.map(
@@ -162,14 +160,19 @@ describe('/events endpoint testing for LocalLink', () => {
         });
     });
     it('200: returns the events array filtered by organiser', () => {
-      return request(app)
-        .get('/events?organiser=' + 2)
-        .expect(200)
+      request(app)
+        .get('/tickets')
         .then(({ body }) => {
-          const events = body.events;
-          events.forEach((event) => {
-            expect(event.organiser).toBe(2);
-          });
+          const organiserID = body.tickets[0].owner_id;
+          return request(app)
+            .get('/events?organiser=' + organiserID)
+            .expect(200)
+            .then(({ body }) => {
+              const events = body.events;
+              events.forEach((event) => {
+                expect(event.organiser).toBe(2);
+              });
+            });
         });
     });
     it('200: returns the events array filtered by multiple filters', () => {
@@ -189,7 +192,7 @@ describe('/events endpoint testing for LocalLink', () => {
   describe('POST /events - returns successfully posted object with an id', () => {
     it('201: successfully posts an event to endpoint and recieves event object back', () => {
       const newEvent = {
-        name: 'test 4',
+        name: 'testing with friends',
         start: '2025-06-14T19:00:00.000+00:00',
         end: '2025-06-14T21:30:00.000+00:00',
         location: {
@@ -200,13 +203,13 @@ describe('/events endpoint testing for LocalLink', () => {
           country: 'UK',
           coords: { lat: 53.48169, long: -2.24089 },
         },
-        organiser: 2,
+        organiser: '2',
         capacity: 100,
-        details: 'Tester',
+        details:
+          'Meet up with new people from your community and test together.',
         status: 'upcoming',
         price: 1000,
-        category: 'test',
-        image_url: 'https://http.dog/201.jpg',
+        category: 'community & social',
       };
       return request(app)
         .post('/events')
@@ -236,16 +239,16 @@ describe('/events endpoint testing for LocalLink', () => {
           country: 'UK',
           coords: { lat: 53.39047, long: -3.00847 },
         },
-        organiser: 2,
+        organiser: '2',
         capacity: 100,
-        details: 'Tester',
+        details: 'Testing Hits',
         status: 'upcoming',
         price: 1000,
-        category: 'test',
+        category: 'music',
       };
       noNameEvent.location = JSON.stringify(noNameEvent.location);
       const noCapacityEvent = {
-        name: 'New Event',
+        name: 'testing top hits 2010',
         start: '2025-06-14T19:00:00.000+00:00',
         end: '2025-06-14T21:30:00.000+00:00',
         location: {
@@ -256,11 +259,11 @@ describe('/events endpoint testing for LocalLink', () => {
           country: 'UK',
           coords: { lat: 53.39047, long: -3.00847 },
         },
-        organiser: 2,
-        details: 'Tester',
+        organiser: '2',
+        details: 'testing top hits 2010',
         status: 'upcoming',
         price: 1000,
-        category: 'test',
+        category: 'music',
       };
       noCapacityEvent.location = JSON.stringify(noCapacityEvent.location);
       return request(app)
@@ -293,7 +296,7 @@ describe('/events/:id endpoint testing for LocalLink', () => {
   describe('GET /events/:id - returns an event object containing relevant information', () => {
     it('200: returns correct event object', () => {
       const event = {
-        name: 'test 2',
+        name: 'testAI workshop: bringing testing to life',
         start: '2025-06-12T19:00:00.000+00:00',
         end: '2025-06-12T21:30:00.000+00:00',
         location: {
@@ -307,12 +310,12 @@ describe('/events/:id endpoint testing for LocalLink', () => {
             long: -2.24089,
           },
         },
-        organiser: 1,
+        organiser: '1',
         capacity: 50,
-        details: 'Another test event',
+        details: 'How to bring your Ai to to a testing success!',
         status: 'upcoming',
         price: 100,
-        category: 'test',
+        category: 'tech & AI',
       };
       return request(app)
         .get('/events')

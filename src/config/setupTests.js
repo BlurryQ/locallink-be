@@ -5,7 +5,7 @@ const { server } = require('../index');
 beforeAll(async () => {
   await resetDatabase();
   //   delay for 3 seconds to allow the database to fully reset
-  await new Promise((resolve) => setTimeout(resolve, 3000));
+  await new Promise((resolve) => setTimeout(resolve, 500));
   await seedDatabase();
   console.log('✅ Database reset and seeded!');
 });

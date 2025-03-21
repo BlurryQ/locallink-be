@@ -1,6 +1,6 @@
 [
   {
-    "name": "test",
+    "name": "a mountain of test",
     "start": "2025-06-18T19:00:00.000+00:00",
     "end": "2025-06-18T21:30:00.000+00:00",
     "location": {
@@ -11,16 +11,15 @@
       "country": "UK",
       "coords": { "lat": 53.48169, "long": -2.24089 }
     },
-    "organiser": 1,
+    "organiser": "1",
     "capacity": 50,
-    "details": "A test event",
+    "details": "A massive amount of testing is about to comence.",
     "status": "upcoming",
     "price": 100,
-    "category": "testing",
-    "image_url": "default"
+    "category": "arts & culture"
   },
   {
-    "name": "test 2",
+    "name": "testAI workshop: bringing testing to life",
     "start": "2025-06-12T19:00:00.000+00:00",
     "end": "2025-06-12T21:30:00.000+00:00",
     "location": {
@@ -31,16 +30,15 @@
       "country": "UK",
       "coords": { "lat": 53.48169, "long": -2.24089 }
     },
-    "organiser": 1,
+    "organiser": "1",
     "capacity": 50,
-    "details": "Another test event",
+    "details": "How to bring your Ai to to a testing success!",
     "status": "upcoming",
     "price": 100,
-    "category": "test",
-    "image_url": "default"
+    "category": "tech & AI"
   },
   {
-    "name": "test 3",
+    "name": "christmas test, testing all the way home",
     "start": "2025-06-13T19:00:00.000+00:00",
     "end": "2025-06-13T21:30:00.000+00:00",
     "location": {
@@ -51,16 +49,15 @@
       "country": "UK",
       "coords": { "lat": 53.39047, "long": -3.00847 }
     },
-    "organiser": 2,
+    "organiser": "2",
     "capacity": 150,
-    "details": "Test event",
+    "details": "All the greatest Christmas test in one place!",
     "status": "upcoming",
     "price": 0,
-    "category": "testing",
-    "image_url": "default"
+    "category": "seasonal & holidays"
   },
   {
-    "name": "pre test",
+    "name": "pre test excercises",
     "start": "2025-06-12T19:00:00.000+00:00",
     "end": "2025-06-12T21:30:00.000+00:00",
     "location": {
@@ -71,12 +68,11 @@
       "country": "UK",
       "coords": { "lat": 53.48169, "long": -2.24089 }
     },
-    "organiser": 1,
+    "organiser": "1",
     "capacity": 50,
-    "details": "Another test event",
+    "details": "Pushing your tests to the limit!",
     "status": "past",
     "price": 100,
-    "category": "test",
-    "image_url": "default"
+    "category": "sports & fitness"
   }
 ]
