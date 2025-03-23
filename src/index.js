@@ -4,15 +4,13 @@ const cors = require('cors');
 
 const app = express();
 
+const allowedOrigins = [
+  'http://localhost:5173', // Local development
+  'https://locallink-fe.netlify.app/', // Netlify frontend
+];
+
 // Allow requests from your frontend
-app.use(
-  cors({
-    // Change this to your frontend URL
-    origin: 'https://locallink-fe.netlify.app/',
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed HTTP methods
-    credentials: true, // Allow cookies and credentials
-  })
-);
+app.use(cors());
 
 app.use(express.json());
 
