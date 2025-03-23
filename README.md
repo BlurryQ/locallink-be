@@ -4,7 +4,7 @@
 
 ## Summary
 
-~~**Hosted API** [LocalLink](#)~~
+**Hosted API** [LocalLink](https://locallink-be.onrender.com/)
 
 This project is a RESTful API designed to manage events and tickets, providing users with Create, Read, Update, and Delete (CRUD) functionality. It utilizes Appwrite as the backend database and authentication service.
 
@@ -47,6 +47,10 @@ APPWRITE_ENDPOINT=<ENDPOINT_HERE>
 APPWRITE_DATABASE_ID=<DATABASE_ID_HERE>
 APPWRITE_EVENTS_TABLE=<EVENTS_TABLE_ID_HERE>
 APPWRITE_TICKETS_TABLE=<TICKETS_TABLE_ID_HERE>
+APPWRITE_USER_TABLE=<USER_TABLE_ID_HERE>
+GOOGLE_CLIENT_ID=<USER_GOOGLE_CLIENT_ID_HERE>
+GOOGLE_CLIENT_SECRET=<USER_GOOGLE_CLIENT_SECRET_HERE>
+GOOGLE_REDIRECT_URI=<USER_GOOGLE_REDIRECT_URI_HERE>
 ```
 
 ### 4. Install Dependencies
@@ -84,8 +88,7 @@ After installation, your `package.json` should contain the following scripts:
 
 ```
 "scripts": {
-  "start": "node server.js",
-  "dev": "nodemon server.js"
+  "dev": "nodemon src/index.js",
 }
 
 ```

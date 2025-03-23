@@ -13,6 +13,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev": "nodemon src/index.js",
     "test": "jest --runInBand --watch --verbose",
     "reset-db": "node db/seeds/resetDatabase.js",
     "seed": "node db/seeds/seedDatabase.js",
