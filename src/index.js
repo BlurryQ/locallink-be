@@ -8,7 +8,7 @@ const app = express();
 app.use(
   cors({
     // Change this to your frontend URL
-    origin: 'http://localhost:5173',
+    origin: 'https://locallink-fe.netlify.app/',
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed HTTP methods
     credentials: true, // Allow cookies and credentials
   })
