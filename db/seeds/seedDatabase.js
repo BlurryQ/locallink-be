@@ -9,6 +9,14 @@ const fs = require('fs');
 // change to true to see all logs
 const debugging = false;
 
+// change to seed dummy starting data
+let useDummyData = false;
+let dummyData = './db/data/events.production.json';
+let eventsFileToUse = './db/data/events.json';
+if (useDummyData) {
+  eventsFileToUse = dummyData;
+}
+
 // main function
 const seedCollection = async (collectionID, dataPath) => {
   const data = JSON.parse(fs.readFileSync(dataPath, 'utf-8'));
@@ -48,11 +56,10 @@ const seedCollection = async (collectionID, dataPath) => {
 
 const seedDatabase = async () => {
   try {
-    await seedCollection(
-      process.env.APPWRITE_EVENTS_TABLE,
-      './db/data/events.json'
-    );
+    await seedCollection(process.env.APPWRITE_EVENTS_TABLE, eventsFileToUse);
     if (debugging) console.log('✅ Events seeded!');
+
+    if (useDummyData) return console.log('✅ Dummy Data completed ✅');
 
     await seedCollection(
       process.env.APPWRITE_USERS_TABLE,

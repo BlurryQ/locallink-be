@@ -1,0 +1,192 @@
+[
+  {
+    "name": "Jazz Night at Sadler's Yard",
+    "start": "2025-04-20T19:00:00.000+00:00",
+    "end": "2025-04-20T23:00:00.000+00:00",
+    "location": {
+      "name": "Sadler's Yard",
+      "street": "Redfern Street",
+      "city": "Manchester",
+      "postcode": "M60 0AB",
+      "country": "UK",
+      "coords": { "lat": 53.48692, "long": -2.24032 }
+    },
+    "organiser": "3",
+    "capacity": 100,
+    "details": "An evening of smooth jazz and great vibes.",
+    "status": "upcoming",
+    "price": 2000,
+    "category": "music & nightlife"
+  },
+  {
+    "name": "Art Exhibition: Modern Masters",
+    "start": "2025-04-22T10:00:00.000+00:00",
+    "end": "2025-04-22T18:00:00.000+00:00",
+    "location": {
+      "name": "Manchester Central Library",
+      "street": "M1",
+      "city": "Manchester",
+      "postcode": "M2 5PD",
+      "country": "UK",
+      "coords": { "lat": 53.47794, "long": -2.24459 }
+    },
+    "organiser": "4",
+    "capacity": 200,
+    "details": "Explore the works of modern art masters.",
+    "status": "upcoming",
+    "price": 1000,
+    "category": "arts & culture"
+  },
+  {
+    "name": "Food Festival: Taste of Manchester",
+    "start": "2025-04-25T12:00:00.000+00:00",
+    "end": "2025-04-25T20:00:00.000+00:00",
+    "location": {
+      "name": "Sadler's Yard",
+      "street": "Redfern Street",
+      "city": "Manchester",
+      "postcode": "M60 0AB",
+      "country": "UK",
+      "coords": { "lat": 53.48692, "long": -2.24032 }
+    },
+    "organiser": "5",
+    "capacity": 300,
+    "details": "A culinary journey through Manchester's best dishes.",
+    "status": "upcoming",
+    "price": 1500,
+    "category": "food & drink"
+  },
+  {
+    "name": "Yoga in the Park",
+    "start": "2025-04-27T09:00:00.000+00:00",
+    "end": "2025-04-27T11:00:00.000+00:00",
+    "location": {
+      "name": "Old Trafford",
+      "street": "Sir Matt Busby Way",
+      "city": "Stretford",
+      "postcode": "M16 0RA",
+      "country": "UK",
+      "coords": { "lat": 53.46256, "long": -2.29103 }
+    },
+    "organiser": "6",
+    "capacity": 50,
+    "details": "Start your day with a relaxing yoga session.",
+    "status": "upcoming",
+    "price": 500,
+    "category": "sports & fitness"
+  },
+  {
+    "name": "Community Picnic",
+    "start": "2025-04-28T12:00:00.000+00:00",
+    "end": "2025-04-28T16:00:00.000+00:00",
+    "location": {
+      "name": "Sadler's Yard",
+      "street": "Redfern Street",
+      "city": "Manchester",
+      "postcode": "M60 0AB",
+      "country": "UK",
+      "coords": { "lat": 53.48692, "long": -2.24032 }
+    },
+    "organiser": "7",
+    "capacity": 150,
+    "details": "Join your neighbors for a fun-filled picnic.",
+    "status": "upcoming",
+    "price": 0,
+    "category": "community & social"
+  },
+  {
+    "name": "Coding Workshop: Python Basics",
+    "start": "2025-04-29T14:00:00.000+00:00",
+    "end": "2025-04-29T17:00:00.000+00:00",
+    "location": {
+      "name": "Manchester Central Library",
+      "street": "M1",
+      "city": "Manchester",
+      "postcode": "M2 5PD",
+      "country": "UK",
+      "coords": { "lat": 53.47794, "long": -2.24459 }
+    },
+    "organiser": "8",
+    "capacity": 30,
+    "details": "Learn the basics of Python programming.",
+    "status": "upcoming",
+    "price": 2500,
+    "category": "education & workshops"
+  },
+  {
+    "name": "Family Fun Day",
+    "start": "2025-04-30T10:00:00.000+00:00",
+    "end": "2025-04-30T16:00:00.000+00:00",
+    "location": {
+      "name": "Old Trafford",
+      "street": "Sir Matt Busby Way",
+      "city": "Stretford",
+      "postcode": "M16 0RA",
+      "country": "UK",
+      "coords": { "lat": 53.46256, "long": -2.29103 }
+    },
+    "organiser": "9",
+    "capacity": 200,
+    "details": "A day of fun activities for the whole family.",
+    "status": "upcoming",
+    "price": 1000,
+    "category": "family & kids"
+  },
+  {
+    "name": "Vintage Market",
+    "start": "2025-05-01T10:00:00.000+00:00",
+    "end": "2025-05-01T18:00:00.000+00:00",
+    "location": {
+      "name": "Sadler's Yard",
+      "street": "Redfern Street",
+      "city": "Manchester",
+      "postcode": "M60 0AB",
+      "country": "UK",
+      "coords": { "lat": 53.48692, "long": -2.24032 }
+    },
+    "organiser": "10",
+    "capacity": 100,
+    "details": "Discover unique vintage items and treasures.",
+    "status": "upcoming",
+    "price": 0,
+    "category": "markets & shopping"
+  },
+  {
+    "name": "Summer Solstice Celebration",
+    "start": "2025-05-02T18:00:00.000+00:00",
+    "end": "2025-05-02T22:00:00.000+00:00",
+    "location": {
+      "name": "Manchester Central Library",
+      "street": "M1",
+      "city": "Manchester",
+      "postcode": "M2 5PD",
+      "country": "UK",
+      "coords": { "lat": 53.47794, "long": -2.24459 }
+    },
+    "organiser": "11",
+    "capacity": 150,
+    "details": "Celebrate the longest day of the year with music and food.",
+    "status": "upcoming",
+    "price": 1500,
+    "category": "seasonal & holidays"
+  },
+  {
+    "name": "AI and Machine Learning Seminar",
+    "start": "2025-05-03T09:00:00.000+00:00",
+    "end": "2025-05-03T12:00:00.000+00:00",
+    "location": {
+      "name": "Old Trafford",
+      "street": "Sir Matt Busby Way",
+      "city": "Stretford",
+      "postcode": "M16 0RA",
+      "country": "UK",
+      "coords": { "lat": 53.46256, "long": -2.29103 }
+    },
+    "organiser": "12",
+    "capacity": 50,
+    "details": "Learn about the latest trends in AI and machine learning.",
+    "status": "upcoming",
+    "price": 3000,
+    "category": "tech & AI"
+  }
+]
