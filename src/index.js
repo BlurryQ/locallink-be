@@ -4,10 +4,10 @@ const cors = require('cors');
 
 const app = express();
 
-const allowedOrigins = [
-  'http://localhost:5173', // Local development
-  'https://locallink-fe.netlify.app/', // Netlify frontend
-];
+// const allowedOrigins = [
+//   'http://localhost:5173', // Local development
+//   'https://locallink-fe.netlify.app/', // Netlify frontend
+// ];
 
 // Allow requests from your frontend
 app.use(cors());
