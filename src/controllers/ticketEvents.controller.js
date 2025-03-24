@@ -23,11 +23,17 @@ const selectTicketEventsByUserID = async (userID, status) => {
   // WHERE tickets.owner_id = userID
   // GROUP BY ticket.events_id
   const { documents } = await selectAllTickets(userID);
-  const ticketEventsPromises = documents.map(async (ticket) => {
-    return await selectEventByID(ticket.event_id);
-  });
 
-  const ticketEvents = await Promise.all(ticketEventsPromises);
+  const ticketEvents = await Promise.all(
+    documents.map(async (ticket) => {
+      try {
+        return await selectEventByID(ticket.event_id);
+      } catch (err) {
+        return null; // returns null for filtering
+      }
+    })
+  );
+
   const formattedTicketEvents = formatTicketEvents(documents, ticketEvents);
   const filteredTickets = formattedTicketEvents.filter(
     (ticket) => ticket.status === status
