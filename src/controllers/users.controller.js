@@ -23,8 +23,8 @@ exports.getUserByEmail = async (req, res) => {
   try {
     const { email } = req.query;
     const { documents } = await selectUserByEmail(email);
-    if (!documents[0])
-      res.status(404).send({ error: 'email address not found' });
+    if (documents.length < 1)
+      return res.status(404).send({ error: 'email address not found' });
     const formattedUser = formatUserData(documents[0]);
     res.status(200).send(formattedUser);
   } catch (err) {
