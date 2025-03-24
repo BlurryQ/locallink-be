@@ -2,8 +2,15 @@ const { formatEventData } = require('./formatEventData');
 const { formatTicketData } = require('./formatTicketData');
 
 exports.formatTicketEvents = (tickets, events) => {
-  const formattedTickets = tickets.map(formatTicketData);
-  const formattedEvents = events.map(formatEventData);
+  const filteredData = tickets
+    .map((ticket, index) => ({ ticket, event: events[index] }))
+    .filter(({ event }) => event !== null);
+
+  const filteredTickets = filteredData.map(({ ticket }) => ticket);
+  const filteredEvents = filteredData.map(({ event }) => event);
+
+  const formattedTickets = filteredTickets.map(formatTicketData);
+  const formattedEvents = filteredEvents.map(formatEventData);
 
   return formattedTickets.map((ticket, index) => {
     const event = formattedEvents[index];
